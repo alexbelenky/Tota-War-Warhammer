@@ -7,23 +7,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+//this will be changed to how the game looks like when you first start it
 public class WelcomePanel extends JPanel implements ActionListener {
-
-    private JTextField textField;
     private JButton submitButton;
-    private JButton clearButton;
     private JFrame enclosingFrame;
 
     public WelcomePanel(JFrame frame) {
         enclosingFrame = frame;
-        textField = new JTextField(10);
-        submitButton = new JButton("Submit");
-        clearButton = new JButton("Clear");
-        add(textField);  // textField doesn't need a listener since nothing needs to happen when we type in text
+        submitButton = new JButton("Karl Franz");
         add(submitButton);
-        add(clearButton);
         submitButton.addActionListener(this);
-        clearButton.addActionListener(this);
     }
 
     @Override
@@ -31,10 +24,8 @@ public class WelcomePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         g.setFont(new Font("Arial", Font.BOLD, 16));
         g.setColor(Color.RED);
-        g.drawString("Please enter your name:", 50, 30);
-        textField.setLocation(50, 50);
-        submitButton.setLocation(50, 100);
-        clearButton.setLocation(150, 100);
+        g.drawString("Who would you like to play as?", 920, 30);
+        submitButton.setLocation(1200, 500);
     }
 
     // ACTIONLISTENER INTERFACE METHODS
@@ -42,11 +33,9 @@ public class WelcomePanel extends JPanel implements ActionListener {
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
             if (button == submitButton) {
-                String playerName = textField.getText();
+                String playerName = "Karl Franz";
                 MainFrame f = new MainFrame(playerName);
                 enclosingFrame.setVisible(false);
-            } else {
-                textField.setText("");
             }
         }
     }
