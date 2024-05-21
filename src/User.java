@@ -5,10 +5,12 @@ public class User {
     private ArrayList<Army> armies;
     private ArrayList<Province> provinces;
 
-    public User(String name) {
+    public User(String name, Army army, Province province) {
         this.name = name;
         armies = new ArrayList<>();
+        addArmy(army);
         provinces = new ArrayList<>();
+        addProvince(province);
     }
 
     public String getName() {

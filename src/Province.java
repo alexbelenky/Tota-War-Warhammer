@@ -5,16 +5,18 @@ public class Province {
     private final String name;
     private final int amountOfPossibleSettlements;
     private ArrayList<Settlement> settlements;
+    private ArrayList<Settlement> userSettlements;
 
-    public Province(boolean isUnited, String name, int amount) {
+    public Province(boolean isUnited, String name, int amount, ArrayList<Settlement> userSettlements) {
         this.isUnited = isUnited;
         this.name = name;
         amountOfPossibleSettlements = amount;
         settlements = new ArrayList<>();
+        this.userSettlements = userSettlements;
     }
 
-    public boolean isUnited() {
-        return isUnited;
+    public boolean isUnitedUser() {
+        return userSettlements.size() == amountOfPossibleSettlements;
     }
 
     public String getName() {
@@ -28,6 +30,11 @@ public class Province {
     public ArrayList<Settlement> getSettlements() {
         return settlements;
     }
+    public ArrayList<Settlement> getUserSettlements() {
+        return userSettlements;
+    }
+
+    public void addUserSettlement(Settlement settlement) {userSettlements.add(settlement); }
 
     public void setUnited(boolean united) {
         isUnited = united;
