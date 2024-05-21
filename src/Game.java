@@ -3,13 +3,20 @@ import java.util.Arrays;
 
 public class Game {
     private User user;
+    private int turn;
     public Game() {
         System.out.println("Which faction"); //for gui
         pickUser("Karl Franz"); //picked in gui
+        play();
     }
 
+    private void play() {
+        while(true) {
+            //checks what the user does or picks
+        }
+    }
     private void pickUser(String name) {
-        //check for specific characters
+        //check for specific characters (for example karl franz)
         Army army = new Army("empire", "get");
         ArrayList<Settlement> settlements = new ArrayList<>(Arrays.asList(new Settlement(true, "test"), new Settlement(false, "small")));
         Province province = new Province(false, "Reikland", 4, settlements);

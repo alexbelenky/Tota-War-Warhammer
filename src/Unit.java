@@ -19,7 +19,11 @@ public class Unit {
         this.meleeAttack = meleeAttack;
         this.meleeDefense = meleeDefense;
         this.chargeBonus = chargeBonus;
-        this.ammo = ammo;
+        if (isRanged) {
+            this.ammo = ammo;
+        } else {
+            this.ammo = 0;
+        }
         this.fatigue = fatigue;
     }
 

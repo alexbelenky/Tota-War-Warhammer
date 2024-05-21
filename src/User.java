@@ -13,6 +13,13 @@ public class User {
         addProvince(province);
     }
 
+    public boolean attack(Army userArmy, Army enemyArmy) {
+        if (userArmy.compareTo(enemyArmy) == 1) {
+            return true;
+        }
+        return false;
+    }
+
     public String getName() {
         return name;
     }
