@@ -7,52 +7,39 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
+public class PickCharacterPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage background;
-    private boolean[] pressedKeys;
-    private Timer timer;
-    private int time;
-
-    public GraphicsPanel(String name) {
+    private JButton KarlFranz;
+    private JButton IkitKlaw;
+    private JFrame enclosingFrame;
+    public PickCharacterPanel(JFrame frame) {
         try {
-            background = ImageIO.read(new File("src/background.png")); //will be something else
+            background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        pressedKeys = new boolean[128];
-        time = 0;
-        timer = new Timer(1000, this); //1000ms = 1 second
-        timer.start();
+        enclosingFrame = frame;
         addKeyListener(this);
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
+        KarlFranz = new JButton("Karl Franz");
+        add(KarlFranz);
+        KarlFranz.addActionListener(this);
+        IkitKlaw = new JButton("Ikit Klaw");
+        add(IkitKlaw);
+        IkitKlaw.addActionListener(this);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);  //
-
-        // player moves left (A)
-        if (pressedKeys[65]) {
-
-        }
-
-        // player moves right (D)
-        if (pressedKeys[68]) {
-
-        }
-
-        // player moves up (W)
-        if (pressedKeys[87]) {
-
-        }
-
-        // player moves down (S)
-        if (pressedKeys[83]) {
-
-        }
+        g.drawImage(background, 0, 0, null);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.setColor(Color.RED);
+        g.drawString("Who would you like to play as?", 920, 30);
+        IkitKlaw.setLocation(0, 500);
+        KarlFranz.setLocation(0, 800);
     }
 
     // ----- KeyListener interface methods -----
@@ -60,13 +47,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void keyPressed(KeyEvent e) {
         // see this for all keycodes: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
-        int key = e.getKeyCode();
-        pressedKeys[key] = true;
     }
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        pressedKeys[key] = false;
     }
 
     // ----- MouseListener interface methods -----
@@ -75,13 +59,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mousePressed(MouseEvent e) { } // unimplemented
 
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
-            Point mouseClickLocation = e.getPoint();
-
-        } else {
-            Point mouseClickLocation = e.getPoint();
-
-        }
     }
 
     public void mouseEntered(MouseEvent e) { } // unimplemented
@@ -90,8 +67,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     // ----- ActionListener interface methods -----
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Timer) {
-            time++;
+        if (e.getSource() instanceof JButton) {
+            JButton button = (JButton) e.getSource();
+            if (button == IkitKlaw) {
+                MainFrame f = new MainFrame("IkitClaw");
+            } else if (button == KarlFranz) {
+                MainFrame f = new MainFrame("Karl Franz");
+            }
+            enclosingFrame.setVisible(false);
         }
     }
 }

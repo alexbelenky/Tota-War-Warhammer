@@ -11,16 +11,11 @@ public class Diplomacy {
     private ArrayList militaryAllies;
     private ArrayList vassals;
     private ArrayList war;
-
-
     public Diplomacy(User user) {
         this.user = user;
         userReliability = 4;
         //could auto set diplomacy depending on which faction
-
-
     }
-
 
     public void diplomate(OtherLord otherLord) {
         System.out.println("Trade? Non-aggression?"); //will get this from gui

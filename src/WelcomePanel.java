@@ -9,32 +9,34 @@ import java.io.IOException;
 
 //this will be changed to how the game looks like when you first start it
 public class WelcomePanel extends JPanel implements ActionListener {
-    private JButton submitButton;
+    private BufferedImage background;
+    private JButton campaign;
     private JFrame enclosingFrame;
 
     public WelcomePanel(JFrame frame) {
+        try {
+            background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         enclosingFrame = frame;
-        submitButton = new JButton("Karl Franz");
-        add(submitButton);
-        submitButton.addActionListener(this);
+        campaign = new JButton("Campaign");
+        add(campaign);
+        campaign.addActionListener(this);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.setColor(Color.RED);
-        g.drawString("Who would you like to play as?", 920, 30);
-        submitButton.setLocation(1200, 500);
+        g.drawImage(background, 0, 0, null);
     }
 
     // ACTIONLISTENER INTERFACE METHODS
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
-            if (button == submitButton) {
-                String playerName = "Karl Franz";
-                MainFrame f = new MainFrame(playerName);
+            if (button == campaign) {
+                PickCharacterFrame f = new PickCharacterFrame();
                 enclosingFrame.setVisible(false);
             }
         }
