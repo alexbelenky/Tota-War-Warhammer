@@ -9,30 +9,34 @@ import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage background;
+    private JButton diplomacy;
     private boolean[] pressedKeys;
-    private Timer timer;
-    private int time;
+    private User user;
+    private Diplomacy personalDiplomacy;
 
     public GraphicsPanel(String name) {
         try {
-            background = ImageIO.read(new File("")); //will be something else
+            background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        diplomacy = new JButton("Diplomacy");
+        add(diplomacy);
+        diplomacy.addActionListener(this);
         pressedKeys = new boolean[128];
-        time = 0;
-        timer = new Timer(1000, this); //1000ms = 1 second
-        timer.start();
         addKeyListener(this);
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
+        user = new User(name, new Army("ga", "go"), new Province(false, "lad", 4, new ArrayList<Settlement>())); //will be changed depending on what character is chosen
+        personalDiplomacy = new Diplomacy(user);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);  //
+        g.drawImage(background, 100, 200, null);
+        diplomacy.setLocation(100, 400);
 
         // player moves left (A)
         if (pressedKeys[65]) {
@@ -90,8 +94,11 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     // ----- ActionListener interface methods -----
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Timer) {
-            time++;
+        if (e.getSource() instanceof JButton) {
+            JButton button = (JButton) e.getSource();
+            if (button == diplomacy) {
+                DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
+            }
         }
     }
 }
