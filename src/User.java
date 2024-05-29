@@ -40,6 +40,9 @@ public class User {
         return armies;
     }
 
+    public ArrayList<Province> getProvinces() {
+        return provinces;
+    }
 
     public void setTreasury(int treasury) {
         this.treasury = treasury;

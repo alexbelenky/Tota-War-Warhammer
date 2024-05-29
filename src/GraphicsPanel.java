@@ -42,7 +42,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        user = new User(name, new Army("ga", "go"), new Province(false, "lad", 4, new ArrayList<Settlement>())); //will be changed depending on what character is chosen
+        Province province = new Province(false, "lad", 4, new ArrayList<Settlement>());
+        province.addUserSettlement(new Settlement(false, "al"));
+        user = new User(name, new Army("ga", "go"), province); //will be changed depending on what character is chosen
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>();
     }
@@ -58,6 +60,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         for(Army userArmy : user.getArmies()) {
             g.drawImage(userArmy.getArmyImage(), userArmy.getxCoord(), userArmy.getyCoord(), null);
+        }
+
+        for(Province province : user.getProvinces()) {
+            for (Settlement settlement : province.getSettlements()) {
+                g.drawImage(settlement.getImage(), settlement.getxCoord(), settlement.getyCoord(), null);
+            }
         }
 
         for (OtherLord enemy : enemies) {

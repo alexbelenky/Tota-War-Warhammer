@@ -1,12 +1,19 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Settlement {
+    private BufferedImage image;
     private boolean isMajor;
     private int level;
     private String name;
     private Army garrison;
     private ArrayList<Building> buildings;
     private Army wanderingArmy;
+    private double xCoord;
+    private double yCoord;
 
     public Settlement(boolean isMajor, String name) {
         this.isMajor = isMajor;
@@ -15,6 +22,13 @@ public class Settlement {
         garrison = new Army("garrison", "general");
         buildings = new ArrayList<>();
         wanderingArmy = null;
+        xCoord = 600;
+        yCoord = 300;
+        try {
+            image = ImageIO.read(new File("src/GUI/Settlements/tempSettlement.PNG"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public boolean isMajor() {
@@ -39,6 +53,18 @@ public class Settlement {
 
     public Army getWanderingArmy() {
         return wanderingArmy;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public int getxCoord() {
+        return (int) xCoord;
+    }
+
+    public int getyCoord() {
+        return (int) yCoord;
     }
 
     public void addLevel() {
