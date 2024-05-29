@@ -6,31 +6,27 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-//this will be changed to how the game looks like when you first start it
-public class WelcomePanel extends JPanel implements ActionListener {
+public class SettingsPanel extends JPanel implements ActionListener {
     private BufferedImage background;
-    private JButton quit;
-    private JButton settings;
-    private JButton campaign;
+    private JButton exit;
+    private JButton something;
     private JFrame enclosingFrame;
 
-    public WelcomePanel(JFrame frame) {
+    public SettingsPanel(JFrame frame) {
         try {
             background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         enclosingFrame = frame;
-        quit = new JButton("Quit");
-        add(quit);
-        quit.addActionListener(this);
-        settings = new JButton("Settings");
-        add(settings);
-        settings.addActionListener(this);
-        campaign = new JButton("Campaign");
-        add(campaign);
-        campaign.addActionListener(this);
+        exit = new JButton("Exit");
+        add(exit);
+        exit.addActionListener(this);
+        something = new JButton("Smth");
+        add(something);
+        something.addActionListener(this);
     }
 
     @Override
@@ -43,13 +39,10 @@ public class WelcomePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
-            if (button == campaign) {
-                PickCharacterFrame f = new PickCharacterFrame();
+            if (button == something) {
+
+            } else if (button == exit) {
                 enclosingFrame.setVisible(false);
-            } else if (button == settings) {
-                SettingsFrame f = new SettingsFrame();
-            } else if (button == quit) {
-                System.exit(0);
             }
         }
     }

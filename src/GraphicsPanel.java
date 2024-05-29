@@ -9,10 +9,14 @@ import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage background;
+    private JButton quit;
     private JButton diplomacy;
+    private JButton settings;
+    private JButton nextTurn;
     private boolean[] pressedKeys;
     private User user;
     private Diplomacy personalDiplomacy;
+    private int turn;
 
     public GraphicsPanel(String name) {
         try {
@@ -20,6 +24,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        nextTurn = new JButton("next turn");
+        add(nextTurn);
+        nextTurn.addActionListener(this);
+        quit = new JButton("Quit");
+        add(quit);
+        quit.addActionListener(this);
+        settings = new JButton("Settings");
+        add(settings);
+        settings.addActionListener(this);
         diplomacy = new JButton("Diplomacy");
         add(diplomacy);
         diplomacy.addActionListener(this);
@@ -36,7 +49,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 100, 200, null);
+        settings.setLocation(200, 400);
+        quit.setLocation(300, 400);
         diplomacy.setLocation(100, 400);
+        nextTurn.setLocation(500, 400);
 
         // player moves left (A)
         if (pressedKeys[65]) {
@@ -98,6 +114,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             JButton button = (JButton) e.getSource();
             if (button == diplomacy) {
                 DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
+            } else if (button == settings) {
+                SettingsFrame f = new SettingsFrame();
+            } else if (button == nextTurn) {
+                turn++;
+            } else if (button == quit) {
+                System.exit(0);
             }
         }
     }

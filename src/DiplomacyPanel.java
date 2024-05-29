@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class DiplomacyPanel extends JPanel implements ActionListener {
     private BufferedImage background;
+    private JButton exit;
     private JButton trade;
     private JFrame enclosingFrame;
     private Diplomacy diplomacy; //will pick otherLord in gui
@@ -21,6 +22,9 @@ public class DiplomacyPanel extends JPanel implements ActionListener {
             System.out.println(e.getMessage());
         }
         enclosingFrame = frame;
+        exit = new JButton("Exit");
+        add(exit);
+        exit.addActionListener(this);
         trade = new JButton("Trade");
         add(trade);
         trade.addActionListener(this);
@@ -39,6 +43,8 @@ public class DiplomacyPanel extends JPanel implements ActionListener {
             JButton button = (JButton) e.getSource();
             if (button == trade) {
                 diplomacy.trade(new OtherLord("otherLord", new Army("a", "b"), new Province(false, "land", 4, new ArrayList<Settlement>())));
+            } else if (button == exit) {
+                enclosingFrame.setVisible(false);
             }
         }
     }
