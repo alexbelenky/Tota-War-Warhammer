@@ -15,6 +15,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton nextTurn;
     private boolean[] pressedKeys;
     private User user;
+    private ArrayList<OtherLord> enemies;
     private Diplomacy personalDiplomacy;
     private int turn;
 
@@ -43,6 +44,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         requestFocusInWindow();
         user = new User(name, new Army("ga", "go"), new Province(false, "lad", 4, new ArrayList<Settlement>())); //will be changed depending on what character is chosen
         personalDiplomacy = new Diplomacy(user);
+        enemies = new ArrayList<>();
     }
 
     @Override
@@ -54,6 +56,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         diplomacy.setLocation(100, 400);
         nextTurn.setLocation(500, 400);
 
+        for(Army userArmy : user.getArmies()) {
+            g.drawImage(userArmy.getArmyImage(), userArmy.getxCoord(), userArmy.getyCoord(), null);
+        }
+
+        for (OtherLord enemy : enemies) {
+            for (Army enemyArmy : enemy.getArmies()) {
+                g.drawImage(enemyArmy.getArmyImage(), enemyArmy.getxCoord(), enemyArmy.getyCoord(), null);
+            }
+        }
         // player moves left (A)
         if (pressedKeys[65]) {
 
