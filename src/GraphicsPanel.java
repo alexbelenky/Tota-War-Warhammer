@@ -128,7 +128,11 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
-
+            for(Army userArmy : user.getArmies()) {
+                if (userArmy.armyRect().contains(mouseClickLocation)) {
+                    System.out.println("clicked!");
+                }
+            }
         } else {
             Point mouseClickLocation = e.getPoint();
 

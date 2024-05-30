@@ -11,12 +11,12 @@ public class Province {
     private ArrayList<Settlement> settlements;
     private ArrayList<Settlement> userSettlements;
 
-    public Province(boolean isUnited, String name, int amount, ArrayList<Settlement> userSettlements) {
+    public Province(boolean isUnited, String name, int amount, ArrayList<Settlement> settlements) {
         this.isUnited = isUnited;
         this.name = name;
         amountOfPossibleSettlements = amount;
-        settlements = new ArrayList<>();
-        this.userSettlements = userSettlements;
+        userSettlements = new ArrayList<>();
+        this.settlements = settlements;
     }
 
     public boolean isUnitedUser() {
@@ -44,7 +44,7 @@ public class Province {
         isUnited = united;
     }
 
-    public void setSettlements(ArrayList<Settlement> settlements) {
+    public void setUserSettlements(ArrayList<Settlement> settlements) {
         this.settlements = settlements;
     }
 
