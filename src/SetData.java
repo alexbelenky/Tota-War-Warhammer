@@ -8,11 +8,11 @@ public class SetData {
     private ArrayList<Province> allProvinces;
 
     public SetData() {
-
+        SetProvinces();
     }
 
     private void SetProvinces() {
-        Settlement Altdorf = new Settlement(true, "Altdorf");
+        Settlement Altdorf = new Settlement(true, "Altdorf"); //can make it so that the starting faction is already put
         Settlement Grunburg = new Settlement(false, "Grunburg");
         Settlement Eilhart = new Settlement(false, "Eilhart");
         Settlement Ubersreik = new Settlement(false, "Ubersreik");

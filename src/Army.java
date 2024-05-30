@@ -13,6 +13,7 @@ public class Army {
     private String general;
     private double xCoord;
     private double yCoord;
+    private boolean isSelected;
 
     public Army(String name, String general) {
         this.name = name;
@@ -20,6 +21,7 @@ public class Army {
         units = new ArrayList<>();
         xCoord = 100;
         yCoord = 100;
+        isSelected = false;
         try {
             armyImage = ImageIO.read(new File(("src/GUI/Armies/tempLordArmy.PNG")));
         } catch (IOException e) {
@@ -53,6 +55,13 @@ public class Army {
 
     public int getyCoord() {
         return (int) yCoord;
+    }
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public int compareTo(Army army) { //returns 1 if this army is greater, -1 if not, and 0 if equal

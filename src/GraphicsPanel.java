@@ -21,6 +21,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private ArrayList<OtherLord> enemies;
     private Diplomacy personalDiplomacy;
     private int turn;
+    boolean hasBeenSelected = false; //only one army can be selected
 
     public GraphicsPanel(String name) {
         try {
@@ -130,7 +131,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             Point mouseClickLocation = e.getPoint();
             for(Army userArmy : user.getArmies()) {
                 if (userArmy.armyRect().contains(mouseClickLocation)) {
-                    System.out.println("clicked!");
+                    if (hasBeenSelected) {
+                        System.out.println("released");
+                        userArmy.setSelected(false);
+                        hasBeenSelected = false;
+                    } else {
+                        System.out.println("clicked!");
+                        userArmy.setSelected(true);
+                        hasBeenSelected = true;
+                    }
                 }
             }
         } else {
