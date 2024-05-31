@@ -58,7 +58,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         province.addUserSettlement(new Settlement(false, "al"));
         user = new User(name, new Army("ga", "go"), province); //will be changed depending on what character is chosen
         personalDiplomacy = new Diplomacy(user);
-        enemies = new ArrayList<>();
+        enemies = new ArrayList<>(); //set later
+        //temp code:
+        Army tempArmy = new Army("lo", "l");
+        tempArmy.setxCoord(400);
+        tempArmy.setyCoord(300);
+        Army tempArmy2 = new Army("lol", "ol");
+        tempArmy2.setxCoord(700);
+        tempArmy2.setyCoord(500);
+        user.addArmy(tempArmy);
+        user.addArmy(tempArmy2);
     }
 
     @Override
@@ -132,23 +141,20 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             Point mouseClickLocation = e.getPoint();
             for(Army userArmy : user.getArmies()) {
                 if (userArmy.armyRect().contains(mouseClickLocation)) {
-                    if (hasBeenSelected) {
-                        System.out.println("released");
+                    if (userArmy.isSelected()) {
                         userArmy.setSelected(false);
-                        hasBeenSelected = false;
+                        selectedArmy = null;
+                        System.out.println("released");
                     } else {
+                        selectedArmy = userArmy;
+                        selectedArmy.setSelected(true);
                         System.out.println("clicked!");
-                        userArmy.setSelected(true);
-                        hasBeenSelected = true;
                     }
-                }
-                if (hasBeenSelected) {
-                    selectedArmy = userArmy;
                 }
             }
         } else {
             Point mouseClickLocation = e.getPoint();
-            if (hasBeenSelected) {
+            if (selectedArmy != null) {
                 selectedArmy.move(mouseClickLocation);
             }
         }

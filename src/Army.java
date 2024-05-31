@@ -19,8 +19,8 @@ public class Army {
         this.name = name;
         this.general = general;
         units = new ArrayList<>();
-        xCoord = 100;
-        yCoord = 100;
+        xCoord = 100; //temp or default
+        yCoord = 100;//temp or default
         isSelected = false;
         try {
             armyImage = ImageIO.read(new File(("src/GUI/Armies/tempLordArmy.PNG")));
@@ -58,6 +58,14 @@ public class Army {
     }
     public boolean isSelected() {
         return isSelected;
+    }
+
+    public void setxCoord(double xCoord) {
+        this.xCoord = xCoord;
+    }
+
+    public void setyCoord(double yCoord) {
+        this.yCoord = yCoord;
     }
 
     public void setSelected(boolean selected) {
