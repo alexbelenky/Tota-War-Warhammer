@@ -22,6 +22,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private Diplomacy personalDiplomacy;
     private int turn;
     boolean hasBeenSelected = false; //only one army can be selected
+    private Army selectedArmy;
 
     public GraphicsPanel(String name) {
         try {
@@ -141,10 +142,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                         hasBeenSelected = true;
                     }
                 }
+                if (hasBeenSelected) {
+                    selectedArmy = userArmy;
+                }
             }
         } else {
             Point mouseClickLocation = e.getPoint();
-
+            if (hasBeenSelected) {
+                selectedArmy.move(mouseClickLocation);
+            }
         }
     }
 

@@ -64,6 +64,11 @@ public class Army {
         isSelected = selected;
     }
 
+    public void move(Point mouseClick) {
+        xCoord = mouseClick.getX();
+        yCoord = mouseClick.getY();
+    }
+
     public int compareTo(Army army) { //returns 1 if this army is greater, -1 if not, and 0 if equal
         if (getPower() > army.getPower()) {
             return 1;
