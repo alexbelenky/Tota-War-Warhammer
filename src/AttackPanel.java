@@ -8,14 +8,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DiplomacyPanel extends JPanel implements ActionListener {
+public class AttackPanel extends JPanel implements ActionListener {
     private BufferedImage background;
     private JButton exit;
-    private JButton trade;
+    private JButton autoResolve;
     private JFrame enclosingFrame;
-    private Diplomacy diplomacy; //will pick otherLord in gui
+    private Army userArmy;
+    private Army otherArmy;
 
-    public DiplomacyPanel(JFrame frame, Diplomacy diplomacy) {
+    public AttackPanel(JFrame frame, Army userArmy, Army otherArmy) {
         try {
             background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
         } catch (IOException e) {
@@ -24,11 +25,12 @@ public class DiplomacyPanel extends JPanel implements ActionListener {
         enclosingFrame = frame;
         exit = new JButton("Exit");
         add(exit);
-        exit.addActionListener(this);
-        trade = new JButton("Trade");
-        add(trade);
-        trade.addActionListener(this);
-        this.diplomacy = diplomacy;
+        exit.addActionListener(this);;
+        autoResolve = new JButton("autoResolve");
+        add(autoResolve);
+        autoResolve.addActionListener(this);;
+        this.userArmy = userArmy;
+        this.otherArmy = otherArmy;
     }
 
     @Override
@@ -41,8 +43,12 @@ public class DiplomacyPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
-            if (button == trade) {
-                diplomacy.trade(new OtherLord("otherLord", new Army("a", "b", false), new Province(false, "land", 4, new ArrayList<Settlement>())));
+            if (button == autoResolve) {
+                if (userArmy.compareTo(otherArmy) > 0) {
+                    //win
+                } else {
+                    //lose
+                }
             } else if (button == exit) {
                 enclosingFrame.setVisible(false);
             }

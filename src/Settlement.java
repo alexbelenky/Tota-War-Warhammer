@@ -19,7 +19,7 @@ public class Settlement {
         this.isMajor = isMajor;
         this.name = name;
         level = 1;
-        garrison = new Army("garrison", "general");
+        garrison = new Army("garrison", "general", true);
         buildings = new ArrayList<>();
         wanderingArmy = null;
         xCoord = 600;

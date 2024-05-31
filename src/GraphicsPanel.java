@@ -18,10 +18,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton enemySettlement;
     private boolean[] pressedKeys;
     private User user;
-    private ArrayList<OtherLord> enemies;
+    private ArrayList<OtherLord> enemies; //doesn't actually mean enemies, just other lords, probably will change
     private Diplomacy personalDiplomacy;
     private int turn;
-    boolean hasBeenSelected = false; //only one army can be selected
     private Army selectedArmy;
 
     public GraphicsPanel(String name) {
@@ -56,18 +55,23 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         requestFocusInWindow();
         Province province = new Province(false, "lad", 4, new ArrayList<Settlement>());
         province.addUserSettlement(new Settlement(false, "al"));
-        user = new User(name, new Army("ga", "go"), province); //will be changed depending on what character is chosen
+        user = new User(name, new Army("ga", "go", true), province); //will be changed depending on what character is chosen
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
         //temp code:
-        Army tempArmy = new Army("lo", "l");
+        Army tempArmy = new Army("lo", "l", true);
         tempArmy.setxCoord(400);
         tempArmy.setyCoord(300);
-        Army tempArmy2 = new Army("lol", "ol");
+        Army tempArmy2 = new Army("lol", "ol", true);
         tempArmy2.setxCoord(700);
         tempArmy2.setyCoord(500);
         user.addArmy(tempArmy);
         user.addArmy(tempArmy2);
+        Army tempArmy3 = new Army("lol", "ol", false);
+        tempArmy3.setxCoord(900);
+        tempArmy3.setyCoord(700);
+        OtherLord enemyArmy = new OtherLord("aa", tempArmy3, new Province(false, "aaaa", 3, new ArrayList<Settlement>()));
+        enemies.add(enemyArmy);
     }
 
     @Override
@@ -156,6 +160,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             Point mouseClickLocation = e.getPoint();
             if (selectedArmy != null) {
                 selectedArmy.move(mouseClickLocation);
+                for(OtherLord otherLord : enemies) {
+                    for(Army enemyArmy : otherLord.getArmies()) {
+                        if (enemyArmy.armyRect().contains(mouseClickLocation)) {
+                            AttackFrame f = new AttackFrame(selectedArmy, enemyArmy);
+                        }
+                    }
+                }
             }
         }
     }

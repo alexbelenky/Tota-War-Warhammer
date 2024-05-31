@@ -17,7 +17,7 @@ public class Game {
     }
     private void pickUser(String name) {
         //check for specific characters (for example karl franz)
-        Army army = new Army("empire", "get");
+        Army army = new Army("empire", "get", true);
         ArrayList<Settlement> settlements = new ArrayList<>(Arrays.asList(new Settlement(true, "test"), new Settlement(false, "small")));
         Province province = new Province(false, "Reikland", 4, settlements);
         user = new User(name, army, province);

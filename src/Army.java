@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class Army {
@@ -15,7 +14,7 @@ public class Army {
     private double yCoord;
     private boolean isSelected;
 
-    public Army(String name, String general) {
+    public Army(String name, String general, boolean isUser) {
         this.name = name;
         this.general = general;
         units = new ArrayList<>();
@@ -23,7 +22,11 @@ public class Army {
         yCoord = 100;//temp or default
         isSelected = false;
         try {
-            armyImage = ImageIO.read(new File(("src/GUI/Armies/tempLordArmy.PNG")));
+            if (isUser) {
+                armyImage = ImageIO.read(new File(("src/GUI/Armies/tempLordArmy.PNG")));
+            } else {
+                armyImage = ImageIO.read(new File(("src/GUI/Armies/tempEnemyLordArmy.PNG")));
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
