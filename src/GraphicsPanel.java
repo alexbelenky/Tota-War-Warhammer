@@ -15,8 +15,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton settings;
     private JButton nextTurn;
     //temp buttons (probably)
-    private JButton playerSettlement;
-    private JButton enemySettlement;
     private boolean[] pressedKeys;
     private User user;
     private ArrayList<OtherLord> enemies; //doesn't actually mean enemies, just other lords, probably will change
@@ -43,21 +41,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         diplomacy = new JButton("Diplomacy");
         add(diplomacy);
         diplomacy.addActionListener(this);
-        //temp buttons probably
-        playerSettlement = new JButton("playerSettlement");
-        add(playerSettlement);
-        playerSettlement.addActionListener(this);
-        enemySettlement = new JButton("enemySettlement");
-        add(enemySettlement);
-        enemySettlement.addActionListener(this);
         pressedKeys = new boolean[128];
         addKeyListener(this);
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        Province province1 = new Province(false, "lad", 1, new ArrayList<Settlement>(Arrays.asList(new Settlement(false, "hello"))));
-        ArrayList<Province> province = new ArrayList<>(Arrays.asList(province1));
-        user = new User(name, new Army("ga", "go", true), province); //will be changed depending on what character is chosen
+        SetData data = new SetData(name);
+        user = data.getUser();
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
         //temp code:
@@ -84,8 +74,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         quit.setLocation(300, 400);
         diplomacy.setLocation(100, 400);
         nextTurn.setLocation(500, 400);
-        playerSettlement.setLocation(500, 600);
-        enemySettlement.setLocation(500, 700);
 
         for(Army userArmy : user.getArmies()) {
             g.drawImage(userArmy.getArmyImage(), userArmy.getxCoord(), userArmy.getyCoord(), null);
@@ -208,11 +196,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 SettingsFrame f = new SettingsFrame();
             } else if (button == nextTurn) {
                 turn++;
-            } else if (button == playerSettlement) {
-                SettlementFrame f = new SettlementFrame(true, new Settlement(false, "theland"));
-            } else if (button == enemySettlement) {
-                SettlementFrame f = new SettlementFrame(false, new Settlement(false, "oogah"));
-            }else if (button == quit) {
+            } else if (button == quit) {
                 System.exit(0);
             }
         }
