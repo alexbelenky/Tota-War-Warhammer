@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
@@ -22,6 +23,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private Diplomacy personalDiplomacy;
     private int turn;
     private Army selectedArmy;
+    private Settlement selectedSettlement;
 
     public GraphicsPanel(String name) {
         try {
@@ -53,8 +55,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        Province province = new Province(false, "lad", 4, new ArrayList<Settlement>());
-        province.addUserSettlement(new Settlement(false, "al"));
+        Province province1 = new Province(false, "lad", 1, new ArrayList<Settlement>(Arrays.asList(new Settlement(false, "hello"))));
+        ArrayList<Province> province = new ArrayList<>(Arrays.asList(province1));
         user = new User(name, new Army("ga", "go", true), province); //will be changed depending on what character is chosen
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
@@ -143,6 +145,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
+            //ARMY CODE:
             for(Army userArmy : user.getArmies()) {
                 if (userArmy.armyRect().contains(mouseClickLocation)) {
                     if (userArmy.isSelected()) {
@@ -156,8 +159,27 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                     }
                 }
             }
+            //ARMY END, SETTLEMENT CODE:
+            for (Province userProvince : user.getProvinces()) {
+                for (Settlement userSettlement : userProvince.getSettlements()) {
+                    if (userSettlement.settlementRect().contains(mouseClickLocation)) {
+                        if (userSettlement.isSelected()) {
+                            userSettlement.setSelected(false);
+                            selectedSettlement = null;
+                            System.out.println("released");
+                        } else {
+                            selectedSettlement = userSettlement;
+                            selectedSettlement.setSelected(true);
+                            System.out.println("clicked!");
+                            SettlementFrame f = new SettlementFrame(true, selectedSettlement);
+                            selectedSettlement.setSelected(false);
+                        }
+                    }
+                }
+            }
         } else {
             Point mouseClickLocation = e.getPoint();
+            //ARMY CODE:
             if (selectedArmy != null) {
                 selectedArmy.move(mouseClickLocation);
                 for(OtherLord otherLord : enemies) {
@@ -168,6 +190,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                     }
                 }
             }
+            //ARMY END
         }
     }
 

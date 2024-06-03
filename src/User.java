@@ -8,13 +8,13 @@ public class User {
     private ArrayList<Province> provinces;
 
 
-    public User(String name, Army army, Province province) {
+    public User(String name, Army army, ArrayList<Province> province) {
         this.NAME = name;
         treasury = 0; //default
         armies = new ArrayList<>();
         addArmy(army);
         provinces = new ArrayList<>();
-        addProvince(province);
+        provinces = province;
     }
 
 

@@ -20,6 +20,6 @@ public class Game {
         Army army = new Army("empire", "get", true);
         ArrayList<Settlement> settlements = new ArrayList<>(Arrays.asList(new Settlement(true, "test"), new Settlement(false, "small")));
         Province province = new Province(false, "Reikland", 4, settlements);
-        user = new User(name, army, province);
+        user = new User(name, army, new ArrayList<Province>());
     }
 }

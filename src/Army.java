@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Army {
+    private final double MOVE_AMT = 0.1;
     private ArrayList<Unit> units;
     private BufferedImage armyImage;
     private String name;

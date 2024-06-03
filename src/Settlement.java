@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class Settlement {
     private Army wanderingArmy;
     private double xCoord;
     private double yCoord;
+    private boolean isSelected;
 
     public Settlement(boolean isMajor, String name) {
         this.isMajor = isMajor;
@@ -22,8 +24,9 @@ public class Settlement {
         garrison = new Army("garrison", "general", true);
         buildings = new ArrayList<>();
         wanderingArmy = null;
-        xCoord = 600;
-        yCoord = 300;
+        xCoord = 200;
+        yCoord = 500;
+        isSelected = false;
         try {
             image = ImageIO.read(new File("src/GUI/Settlements/tempSettlement.PNG"));
         } catch (IOException e) {
@@ -67,6 +70,10 @@ public class Settlement {
         return (int) yCoord;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
     public void addLevel() {
         level++;
     }
@@ -89,5 +96,16 @@ public class Settlement {
             return true;
         }
         return false;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public Rectangle settlementRect() {
+        int imageHeight = getImage().getHeight();
+        int imageWidth = getImage().getWidth();
+        Rectangle rect = new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
+        return rect;
     }
 }
