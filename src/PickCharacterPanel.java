@@ -70,7 +70,7 @@ public class PickCharacterPanel extends JPanel implements KeyListener, MouseList
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
             if (button == IkitKlaw) {
-                MainFrame f = new MainFrame("IkitClaw");
+                MainFrame f = new MainFrame("Ikit Claw");
             } else if (button == KarlFranz) {
                 MainFrame f = new MainFrame("Karl Franz");
             }

@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
@@ -14,14 +15,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private JButton settings;
     private JButton nextTurn;
     //temp buttons (probably)
-    private JButton playerSettlement;
-    private JButton enemySettlement;
     private boolean[] pressedKeys;
     private User user;
     private ArrayList<OtherLord> enemies; //doesn't actually mean enemies, just other lords, probably will change
     private Diplomacy personalDiplomacy;
     private int turn;
     private Army selectedArmy;
+    private Settlement selectedSettlement;
 
     public GraphicsPanel(String name) {
         try {
@@ -41,21 +41,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         diplomacy = new JButton("Diplomacy");
         add(diplomacy);
         diplomacy.addActionListener(this);
-        //temp buttons probably
-        playerSettlement = new JButton("playerSettlement");
-        add(playerSettlement);
-        playerSettlement.addActionListener(this);
-        enemySettlement = new JButton("enemySettlement");
-        add(enemySettlement);
-        enemySettlement.addActionListener(this);
         pressedKeys = new boolean[128];
         addKeyListener(this);
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        Province province = new Province(false, "lad", 4, new ArrayList<Settlement>());
-        province.addUserSettlement(new Settlement(false, "al"));
-        user = new User(name, new Army("ga", "go", true), province); //will be changed depending on what character is chosen
+        SetData data = new SetData(name);
+        user = data.getUser();
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
         //temp code:
@@ -82,8 +74,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         quit.setLocation(300, 400);
         diplomacy.setLocation(100, 400);
         nextTurn.setLocation(500, 400);
-        playerSettlement.setLocation(500, 600);
-        enemySettlement.setLocation(500, 700);
 
         for(Army userArmy : user.getArmies()) {
             g.drawImage(userArmy.getArmyImage(), userArmy.getxCoord(), userArmy.getyCoord(), null);
@@ -143,6 +133,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
+            //ARMY CODE:
             for(Army userArmy : user.getArmies()) {
                 if (userArmy.armyRect().contains(mouseClickLocation)) {
                     if (userArmy.isSelected()) {
@@ -156,8 +147,27 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                     }
                 }
             }
+            //ARMY END, SETTLEMENT CODE:
+            for (Province userProvince : user.getProvinces()) {
+                for (Settlement userSettlement : userProvince.getSettlements()) {
+                    if (userSettlement.settlementRect().contains(mouseClickLocation)) {
+                        if (userSettlement.isSelected()) {
+                            userSettlement.setSelected(false);
+                            selectedSettlement = null;
+                            System.out.println("released");
+                        } else {
+                            selectedSettlement = userSettlement;
+                            selectedSettlement.setSelected(true);
+                            System.out.println("clicked!");
+                            SettlementFrame f = new SettlementFrame(true, selectedSettlement);
+                            selectedSettlement.setSelected(false);
+                        }
+                    }
+                }
+            }
         } else {
             Point mouseClickLocation = e.getPoint();
+            //ARMY CODE:
             if (selectedArmy != null) {
                 selectedArmy.move(mouseClickLocation);
                 for(OtherLord otherLord : enemies) {
@@ -168,6 +178,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                     }
                 }
             }
+            //ARMY END
         }
     }
 
@@ -185,11 +196,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 SettingsFrame f = new SettingsFrame();
             } else if (button == nextTurn) {
                 turn++;
-            } else if (button == playerSettlement) {
-                SettlementFrame f = new SettlementFrame(true, new Settlement(false, "theland"));
-            } else if (button == enemySettlement) {
-                SettlementFrame f = new SettlementFrame(false, new Settlement(false, "oogah"));
-            }else if (button == quit) {
+            } else if (button == quit) {
                 System.exit(0);
             }
         }
