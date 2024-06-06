@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -6,13 +7,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Button implements MouseListener {
+public class Button extends JComponent implements MouseListener {
     private BufferedImage image;
     private double xCoord;
     private double yCoord;
-    private boolean isVisible;
+    private boolean customVisible;
 
-    public Button(String string, double xCoord, double yCoord, boolean isVisible) {
+    public Button(String string, double xCoord, double yCoord) {
         try {
             image = ImageIO.read(new File(string));
         } catch (IOException e) {
@@ -20,7 +21,7 @@ public class Button implements MouseListener {
         }
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-        this.isVisible = false;
+        this.customVisible = false; // buttons not visible till hovered over
     }
 
     public BufferedImage getImage() {
@@ -38,37 +39,26 @@ public class Button implements MouseListener {
     public Rectangle buttonRect() {
         int imageHeight = image.getHeight();
         int imageWidth = image.getWidth();
-        Rectangle rect = new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
-        return rect;
+        return new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
     }
 
-    public boolean isVisible() {
-        return isVisible;
+    public boolean isCustomVisible() {
+        return customVisible;
     }
 
-    public void setVisible(boolean visible) {
-        isVisible = visible;
+    public void setCustomVisible(boolean visible) {
+        this.customVisible = visible;
     }
 
+    // ----- MouseListener interface methods -----
 
+    public void mouseClicked(MouseEvent e) { }
 
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) { }
 
-    }
+    public void mouseReleased(MouseEvent e) { }
 
-    public void mousePressed(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) { }
 
-    }
-
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("hello");
-    }
-
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) { }
 }
