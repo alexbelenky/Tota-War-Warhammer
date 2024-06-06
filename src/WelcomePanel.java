@@ -25,7 +25,7 @@ public class WelcomePanel extends JPanel implements MouseListener, MouseMotionLi
             campaignButton = new Button("src/GUI/Buttons/campaignButton.png", 30, 490);
             multiplayerButton = new Button("src/GUI/Buttons/multiplayerButton.png", 20, 570);
             optionsButton = new Button("src/GUI/Buttons/optionsButton.png", 30, 610);
-            quitButton = new Button("src/GUI/Buttons/exitButton.png", 10, 900);
+            quitButton = new Button("src/GUI/Buttons/exitButton.png", 2, 1020);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
