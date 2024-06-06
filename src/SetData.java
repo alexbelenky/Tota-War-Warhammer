@@ -37,6 +37,7 @@ public class SetData {
     private void SetArmies() {
         if (name.equals("Karl Franz")) {
             Army army = new Army("Check later", "later", true);
+            userArmy = army;
         } else {
             //ikit
         }

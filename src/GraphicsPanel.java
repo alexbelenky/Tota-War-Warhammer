@@ -50,20 +50,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         user = data.getUser();
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
-        //temp code:
-        Army tempArmy = new Army("lo", "l", true);
-        tempArmy.setxCoord(400);
-        tempArmy.setyCoord(300);
-        Army tempArmy2 = new Army("lol", "ol", true);
-        tempArmy2.setxCoord(700);
-        tempArmy2.setyCoord(500);
-        user.addArmy(tempArmy);
-        user.addArmy(tempArmy2);
-        Army tempArmy3 = new Army("lol", "ol", false);
-        tempArmy3.setxCoord(900);
-        tempArmy3.setyCoord(700);
-        OtherLord enemyArmy = new OtherLord("aa", tempArmy3, new Province(false, "aaaa", 3, new ArrayList<Settlement>()));
-        enemies.add(enemyArmy);
     }
 
     @Override
