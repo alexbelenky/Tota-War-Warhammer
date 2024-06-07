@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class WelcomePanel extends JPanel implements MouseListener, MouseMotionListener, ActionListener {
+public class WelcomePanel extends JPanel implements MouseListener, MouseMotionListener {
     private BufferedImage background;
     private ArrayList<Button> buttons;
     private Button battleButton;
@@ -48,10 +48,6 @@ public class WelcomePanel extends JPanel implements MouseListener, MouseMotionLi
                 g.drawImage(button.getImage(), (int) button.getxCoord(), (int) button.getyCoord(), null);
             }
         }
-    }
-
-    // ACTIONLISTENER INTERFACE METHODS
-    public void actionPerformed(ActionEvent e) {
     }
 
     // ----- MouseListener interface methods -----

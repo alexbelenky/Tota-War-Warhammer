@@ -6,29 +6,31 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class PickCharacterPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
+public class PickCharacterPanel extends JPanel implements MouseListener, MouseMotionListener {
     private BufferedImage background;
-    private JButton KarlFranz;
-    private JButton IkitKlaw;
+    private Button KarlFranz;
+    private Button IkitKlaw;
+    private ArrayList<Button> buttons;
     private JFrame enclosingFrame;
     public PickCharacterPanel(JFrame frame) {
         try {
             background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
+            KarlFranz = new Button("src/GUI/Buttons/karlButtonTemp.PNG", 100, 530);
+            IkitKlaw = new Button("src/GUI/Buttons/ikitButtonTemp.PNG", 100, 800);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         enclosingFrame = frame;
-        addKeyListener(this);
         addMouseListener(this);
-        setFocusable(true);
-        requestFocusInWindow();
-        KarlFranz = new JButton("Karl Franz");
-        add(KarlFranz);
-        KarlFranz.addActionListener(this);
-        IkitKlaw = new JButton("Ikit Klaw");
-        add(IkitKlaw);
-        IkitKlaw.addActionListener(this);
+        addMouseMotionListener(this);
+        buttons = new ArrayList<>(Arrays.asList(KarlFranz, IkitKlaw));
+
+        for (Button button : buttons) {
+            button.addMouseListener(button);
+        }
+
     }
 
     @Override
@@ -38,19 +40,12 @@ public class PickCharacterPanel extends JPanel implements KeyListener, MouseList
         g.setFont(new Font("Arial", Font.BOLD, 16));
         g.setColor(Color.RED);
         g.drawString("Who would you like to play as?", 920, 30);
-        IkitKlaw.setLocation(0, 500);
-        KarlFranz.setLocation(0, 800);
-    }
+        for (Button button : buttons) {
+            if (button.isCustomVisible()) {
+                g.drawImage(button.getImage(), (int) button.getxCoord(), (int) button.getyCoord(), null);
+            }
+        }
 
-    // ----- KeyListener interface methods -----
-    public void keyTyped(KeyEvent e) { } // unimplemented
-
-    public void keyPressed(KeyEvent e) {
-        // see this for all keycodes: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
-    }
-
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
     }
 
     // ----- MouseListener interface methods -----
@@ -59,22 +54,38 @@ public class PickCharacterPanel extends JPanel implements KeyListener, MouseList
     public void mousePressed(MouseEvent e) { } // unimplemented
 
     public void mouseReleased(MouseEvent e) {
+        Point mouseClickLocation = e.getPoint();
+        for (Button button : buttons) {
+            if (button.buttonRect().contains(mouseClickLocation) && button.isCustomVisible()) {
+                if (button == KarlFranz) {
+                    MainFrame f = new MainFrame("Karl Franz");
+                    enclosingFrame.setVisible(false);
+                } else if (button == IkitKlaw) {
+                    MainFrame f = new MainFrame("Ikit Claw");
+                }
+            }
+        }
     }
 
     public void mouseEntered(MouseEvent e) { } // unimplemented
 
     public void mouseExited(MouseEvent e) { } // unimplemented
 
-    // ----- ActionListener interface methods -----
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton) {
-            JButton button = (JButton) e.getSource();
-            if (button == IkitKlaw) {
-                MainFrame f = new MainFrame("Ikit Claw");
-            } else if (button == KarlFranz) {
-                MainFrame f = new MainFrame("Karl Franz");
+    // ----- MouseMotionListener interface methods -----
+
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        Point mouseLocation = e.getPoint();
+        for (Button button : buttons) {
+            if (button.buttonRect().contains(mouseLocation)) {
+                button.setCustomVisible(true);
+            } else {
+                button.setCustomVisible(false);
             }
-            enclosingFrame.setVisible(false);
         }
+        repaint();
     }
 }

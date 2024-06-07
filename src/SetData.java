@@ -20,6 +20,7 @@ public class SetData {
     }
 
     private void SetProvinces() {
+        System.out.println(name);
         Settlement Altdorf = new Settlement(true, "Altdorf"); //can make it so that the starting faction is already put
         Settlement Grunburg = new Settlement(false, "Grunburg");
         Settlement Eilhart = new Settlement(false, "Eilhart");
