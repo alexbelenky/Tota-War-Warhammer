@@ -1,12 +1,15 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Army {
-    private final double MOVE_AMT = 0.1;
+public class Army extends JComponent {
+    private final double MOVE_AMT = 1;
     private ArrayList<Unit> units;
     private BufferedImage armyImage;
     private String name;
@@ -15,12 +18,12 @@ public class Army {
     private double yCoord;
     private boolean isSelected;
 
-    public Army(String name, String general, boolean isUser) {
+    public Army(String name, String general, boolean isUser, double xCoord, double yCoord) {
         this.name = name;
         this.general = general;
         units = new ArrayList<>();
-        xCoord = 100; //temp or default
-        yCoord = 100;//temp or default
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
         isSelected = false;
         try {
             if (isUser) {
@@ -76,9 +79,29 @@ public class Army {
         isSelected = selected;
     }
 
-    public void move(Point mouseClick) {
-        xCoord = mouseClick.getX();
-        yCoord = mouseClick.getY();
+    public void move(Point mouseClick) { //not working as intended; intended to move slowly
+        if (mouseClick.x > xCoord) {
+            while (mouseClick.x > xCoord) {
+                xCoord += MOVE_AMT;
+                repaint();
+            }
+        } else {
+            while (mouseClick.x < xCoord) {
+                xCoord -= MOVE_AMT;
+                repaint();
+            }
+        }
+        if (mouseClick.y > yCoord) {
+            while (mouseClick.y > yCoord) {
+                yCoord += MOVE_AMT;
+                repaint();
+            }
+        } else {
+            while (mouseClick.y < yCoord) {
+                yCoord -= MOVE_AMT;
+                repaint();
+            }
+        }
     }
 
     public int compareTo(Army army) { //returns 1 if this army is greater, -1 if not, and 0 if equal

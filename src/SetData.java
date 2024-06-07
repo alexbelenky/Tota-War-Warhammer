@@ -37,7 +37,7 @@ public class SetData {
 
     private void SetArmies() {
         if (name.equals("Karl Franz")) {
-            Army army = new Army("Check later", "later", true);
+            Army army = new Army("Check later", "later", true, 100, 100); //xCord and yCord are temp
             userArmy = army;
         } else {
             //ikit

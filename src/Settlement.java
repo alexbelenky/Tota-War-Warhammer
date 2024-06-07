@@ -21,7 +21,7 @@ public class Settlement {
         this.isMajor = isMajor;
         this.name = name;
         level = 1;
-        garrison = new Army("garrison", "general", true);
+        garrison = new Army("garrison", "general", true, 100, 100); //xCord and yCord are temp
         buildings = new ArrayList<>();
         wanderingArmy = null;
         xCoord = 200;
