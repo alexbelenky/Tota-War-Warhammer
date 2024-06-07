@@ -8,14 +8,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
+public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionListener {
     private BufferedImage background;
-    private JButton quit;
-    private JButton diplomacy;
-    private JButton settings;
-    private JButton nextTurn;
-    //temp buttons (probably)
-    private boolean[] pressedKeys;
+    private Button quit;
+    private Button diplomacy;
+    private Button settings;
+    private Button nextTurn;
+    private ArrayList<Button> buttons;
     private User user;
     private ArrayList<OtherLord> enemies; //doesn't actually mean enemies, just other lords, probably will change
     private Diplomacy personalDiplomacy;
@@ -26,40 +25,35 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public GraphicsPanel(String name) {
         try {
             background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
+            quit = new Button("src/GUI/Buttons/exitButton.png", 2, 1020);
+            diplomacy = new Button("temp", 5, 100); //need to change
+            settings = new Button("temp", 5, 100); //need to change
+            nextTurn = new Button("temp", 5, 100); //need to change
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        nextTurn = new JButton("next turn");
-        add(nextTurn);
-        nextTurn.addActionListener(this);
-        quit = new JButton("Quit");
-        add(quit);
-        quit.addActionListener(this);
-        settings = new JButton("Settings");
-        add(settings);
-        settings.addActionListener(this);
-        diplomacy = new JButton("Diplomacy");
-        add(diplomacy);
-        diplomacy.addActionListener(this);
-        pressedKeys = new boolean[128];
-        addKeyListener(this);
         addMouseListener(this);
-        setFocusable(true);
-        requestFocusInWindow();
+        addMouseMotionListener(this);
         SetData data = new SetData(name);
         user = data.getUser();
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
+
+        buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, settings, nextTurn));
+        for (Button button : buttons) {
+            button.addMouseListener(button);
+        }
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 100, 200, null);
-        settings.setLocation(200, 400);
-        quit.setLocation(300, 400);
-        diplomacy.setLocation(100, 400);
-        nextTurn.setLocation(500, 400);
+        for (Button button : buttons) {
+            if (button.isCustomVisible()) {
+                g.drawImage(button.getImage(), (int) button.getxCoord(), (int) button.getyCoord(), null);
+            }
+        }
 
         for(Army userArmy : user.getArmies()) {
             g.drawImage(userArmy.getArmyImage(), userArmy.getxCoord(), userArmy.getyCoord(), null);
@@ -76,39 +70,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 g.drawImage(enemyArmy.getArmyImage(), enemyArmy.getxCoord(), enemyArmy.getyCoord(), null);
             }
         }
-        // player moves left (A)
-        if (pressedKeys[65]) {
-
-        }
-
-        // player moves right (D)
-        if (pressedKeys[68]) {
-
-        }
-
-        // player moves up (W)
-        if (pressedKeys[87]) {
-
-        }
-
-        // player moves down (S)
-        if (pressedKeys[83]) {
-
-        }
-    }
-
-    // ----- KeyListener interface methods -----
-    public void keyTyped(KeyEvent e) { } // unimplemented
-
-    public void keyPressed(KeyEvent e) {
-        // see this for all keycodes: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
-        int key = e.getKeyCode();
-        pressedKeys[key] = true;
-    }
-
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-        pressedKeys[key] = false;
     }
 
     // ----- MouseListener interface methods -----
@@ -172,19 +133,27 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void mouseExited(MouseEvent e) { } // unimplemented
 
-    // ----- ActionListener interface methods -----
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton) {
-            JButton button = (JButton) e.getSource();
-            if (button == diplomacy) {
-                DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
-            } else if (button == settings) {
-                SettingsFrame f = new SettingsFrame();
-            } else if (button == nextTurn) {
-                turn++;
-            } else if (button == quit) {
-                System.exit(0);
-            }
-        }
+    public void mouseDragged(MouseEvent e) {
+
     }
+
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    // ----- ActionListener interface methods -----
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getSource() instanceof JButton) {
+//            JButton button = (JButton) e.getSource();
+//            if (button == diplomacy) {
+//                DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
+//            } else if (button == settings) {
+//                SettingsFrame f = new SettingsFrame();
+//            } else if (button == nextTurn) {
+//                turn++;
+//            } else if (button == quit) {
+//                System.exit(0);
+//            }
+//        }
+//    }
 }
