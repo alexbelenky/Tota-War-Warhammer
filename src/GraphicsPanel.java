@@ -80,6 +80,21 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
+            //BUTTON CODE:
+            for (Button button : buttons) {
+                if (button.buttonRect().contains(mouseClickLocation) && button.isCustomVisible()) {
+                    if (button == diplomacy) {
+                        DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
+                    } else if (button == settings) {
+                        SettingsFrame f = new SettingsFrame();
+                    } else if (button == nextTurn) {
+                        turn++;
+                    } else if (button == quit) {
+                        System.exit(0);
+                    }
+                }
+            }
+
             //ARMY CODE:
             for(Army userArmy : user.getArmies()) {
                 if (userArmy.armyRect().contains(mouseClickLocation)) {
@@ -140,20 +155,4 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     public void mouseMoved(MouseEvent e) {
 
     }
-
-    // ----- ActionListener interface methods -----
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() instanceof JButton) {
-//            JButton button = (JButton) e.getSource();
-//            if (button == diplomacy) {
-//                DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
-//            } else if (button == settings) {
-//                SettingsFrame f = new SettingsFrame();
-//            } else if (button == nextTurn) {
-//                turn++;
-//            } else if (button == quit) {
-//                System.exit(0);
-//            }
-//        }
-//    }
 }
