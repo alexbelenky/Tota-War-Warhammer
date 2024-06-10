@@ -1,8 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -63,6 +63,7 @@ public class Army extends JComponent {
     public int getyCoord() {
         return (int) yCoord;
     }
+
     public boolean isSelected() {
         return isSelected;
     }
@@ -79,32 +80,39 @@ public class Army extends JComponent {
         isSelected = selected;
     }
 
-    public void move(Point mouseClick) { //not working as intended; intended to move slowly
-        if (mouseClick.x > xCoord) {
-            while (mouseClick.x > xCoord) {
-                xCoord += MOVE_AMT;
+    public void move(Point mouseClick) {
+        Timer timer = new Timer(10, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean reachedX = false;
+                boolean reachedY = false;
+
+                if (mouseClick.x > xCoord) {
+                    xCoord = Math.min(xCoord + MOVE_AMT, mouseClick.x);
+                } else if (mouseClick.x < xCoord) {
+                    xCoord = Math.max(xCoord - MOVE_AMT, mouseClick.x);
+                } else {
+                    reachedX = true;
+                }
+
+                if (mouseClick.y > yCoord) {
+                    yCoord = Math.min(yCoord + MOVE_AMT, mouseClick.y);
+                } else if (mouseClick.y < yCoord) {
+                    yCoord = Math.max(yCoord - MOVE_AMT, mouseClick.y);
+                } else {
+                    reachedY = true;
+                }
+
                 repaint();
+
+                if (reachedX && reachedY) {
+                    ((Timer) e.getSource()).stop();
+                }
             }
-        } else {
-            while (mouseClick.x < xCoord) {
-                xCoord -= MOVE_AMT;
-                repaint();
-            }
-        }
-        if (mouseClick.y > yCoord) {
-            while (mouseClick.y > yCoord) {
-                yCoord += MOVE_AMT;
-                repaint();
-            }
-        } else {
-            while (mouseClick.y < yCoord) {
-                yCoord -= MOVE_AMT;
-                repaint();
-            }
-        }
+        });
+        timer.start();
     }
 
-    public int compareTo(Army army) { //returns 1 if this army is greater, -1 if not, and 0 if equal
+    public int compareTo(Army army) {
         if (getPower() > army.getPower()) {
             return 1;
         } else if (getPower() < army.getPower()) {
@@ -116,8 +124,6 @@ public class Army extends JComponent {
     public Rectangle armyRect() {
         int imageHeight = getArmyImage().getHeight();
         int imageWidth = getArmyImage().getWidth();
-        Rectangle rect = new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
-        return rect;
+        return new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
     }
-
 }

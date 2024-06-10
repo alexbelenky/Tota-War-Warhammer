@@ -26,9 +26,9 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         try {
             background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
             quit = new Button("src/GUI/Buttons/exitButton.png", 2, 1020);
-            diplomacy = new Button("temp", 5, 100); //need to change
-            settings = new Button("temp", 5, 100); //need to change
-            nextTurn = new Button("temp", 5, 100); //need to change
+//            diplomacy = new Button("temp", 5, 100); //need to change
+//            settings = new Button("temp", 5, 100); //need to change
+//            nextTurn = new Button("temp", 5, 100); //need to change
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -39,7 +39,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
 
-        buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, settings, nextTurn));
+        buttons = new ArrayList<>(Arrays.asList(quit)); //add diplomacy, settings, nextTurn
         for (Button button : buttons) {
             button.addMouseListener(button);
         }
