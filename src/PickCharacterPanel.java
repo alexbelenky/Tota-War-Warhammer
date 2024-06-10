@@ -9,16 +9,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PickCharacterPanel extends JPanel implements MouseListener, MouseMotionListener {
-    private BufferedImage background;
+    private BufferedImage backgroundIkit;
+    private BufferedImage backgroundKarl;
     private Button KarlFranz;
     private Button IkitKlaw;
     private ArrayList<Button> buttons;
     private JFrame enclosingFrame;
     public PickCharacterPanel(JFrame frame) {
         try {
-            background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
-            KarlFranz = new Button("src/GUI/Buttons/karlButtonTemp.PNG", 100, 530);
-            IkitKlaw = new Button("src/GUI/Buttons/ikitButtonTemp.PNG", 100, 800);
+            backgroundIkit = ImageIO.read(new File("src/GUI/Background/ikitKlawBackground.png"));
+            backgroundKarl = ImageIO.read(new File("src/GUI/Background/karlFranzBackground.png"));
+            IkitKlaw = new Button("src/GUI/Buttons/ikitClawButton.PNG", 400, 400);
+            KarlFranz = new Button("src/GUI/Buttons/karlFranzButton.PNG", 1425, 400);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -36,10 +38,9 @@ public class PickCharacterPanel extends JPanel implements MouseListener, MouseMo
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.setColor(Color.RED);
-        g.drawString("Who would you like to play as?", 920, 30);
+        g.drawImage(backgroundIkit, 0, 0, null);
+        g.drawImage(backgroundKarl, 950, 0, null);
+
         for (Button button : buttons) {
             if (button.isCustomVisible()) {
                 g.drawImage(button.getImage(), (int) button.getxCoord(), (int) button.getyCoord(), null);

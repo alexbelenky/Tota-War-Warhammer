@@ -8,6 +8,7 @@ public class MainFrame implements Runnable {
         JFrame frame = new JFrame("Total War Warhammer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
+        frame.setUndecorated(true);
         frame.setLocationRelativeTo(null);
 
         panel = new GraphicsPanel(name);

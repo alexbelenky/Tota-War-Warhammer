@@ -24,7 +24,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
 
     public GraphicsPanel(String name) {
         try {
-            background = ImageIO.read(new File("src/GUI/Background/tempBackground.PNG")); //will be something else
+            background = ImageIO.read(new File("src/GUI/Background/gameBackground.PNG"));
             quit = new Button("src/GUI/Buttons/exitButton.png", 2, 1020);
 //            diplomacy = new Button("temp", 5, 100); //need to change
 //            settings = new Button("temp", 5, 100); //need to change
@@ -48,7 +48,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 100, 200, null);
+        g.drawImage(background, 0, 0, null);
         for (Button button : buttons) {
             if (button.isCustomVisible()) {
                 g.drawImage(button.getImage(), (int) button.getxCoord(), (int) button.getyCoord(), null);
