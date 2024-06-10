@@ -10,25 +10,25 @@ public class Settlement {
     private boolean isMajor;
     private int level;
     private String name;
-    private Army garrison;
     private ArrayList<Building> buildings;
-    private Army wanderingArmy;
     private double xCoord;
     private double yCoord;
     private boolean isSelected;
 
-    public Settlement(boolean isMajor, String name) {
+    public Settlement(boolean isMajor, String name, double xCoord, double yCoord) {
         this.isMajor = isMajor;
         this.name = name;
         level = 1;
-        garrison = new Army("garrison", "general", true, 100, 100); //xCord and yCord are temp
         buildings = new ArrayList<>();
-        wanderingArmy = null;
-        xCoord = 200;
-        yCoord = 500;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
         isSelected = false;
         try {
-            image = ImageIO.read(new File("src/GUI/Settlements/tempSettlement.PNG"));
+            if (isMajor) {
+                image = ImageIO.read(new File("src/GUI/Settlements/provinceSettlement.png"));
+            } else {
+                image = ImageIO.read(new File("src/GUI/Settlements/smallSettlementKarl.png"));
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -46,16 +46,8 @@ public class Settlement {
         return name;
     }
 
-    public Army getGarrison() {
-        return garrison;
-    }
-
     public ArrayList<Building> getBuildings() {
         return buildings;
-    }
-
-    public Army getWanderingArmy() {
-        return wanderingArmy;
     }
 
     public BufferedImage getImage() {
@@ -82,20 +74,8 @@ public class Settlement {
         this.name = name;
     }
 
-    public void setGarrison(Army army) {
-        garrison = army;
-    }
-
     public void addBuilding(Building building) {
         buildings.add(building);
-    }
-
-    public boolean setWanderingArmy(Army wanderingArmy) { //returns true if army can occupy settlement, returns false otherwise
-        if (wanderingArmy != null) {
-            this.wanderingArmy = wanderingArmy;
-            return true;
-        }
-        return false;
     }
 
     public void setSelected(boolean selected) {

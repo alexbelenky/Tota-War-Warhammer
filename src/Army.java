@@ -27,9 +27,9 @@ public class Army extends JComponent {
         isSelected = false;
         try {
             if (isUser) {
-                armyImage = ImageIO.read(new File(("src/GUI/Armies/tempLordArmy.PNG")));
+                armyImage = ImageIO.read(new File(("src/GUI/Armies/karlArmy.png")));
             } else {
-                armyImage = ImageIO.read(new File(("src/GUI/Armies/tempEnemyLordArmy.PNG")));
+                armyImage = ImageIO.read(new File(("src/GUI/Armies/ratEnemy.png")));
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());

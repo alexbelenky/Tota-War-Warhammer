@@ -21,10 +21,10 @@ public class SetData {
 
     private void SetProvinces() {
         System.out.println(name);
-        Settlement Altdorf = new Settlement(true, "Altdorf"); //can make it so that the starting faction is already put
-        Settlement Grunburg = new Settlement(false, "Grunburg");
-        Settlement Eilhart = new Settlement(false, "Eilhart");
-        Settlement Ubersreik = new Settlement(false, "Ubersreik");
+        Settlement Altdorf = new Settlement(true, "Altdorf", 700, 680); //can make it so that the starting faction is already put
+        Settlement Grunburg = new Settlement(false, "Grunburg", 600, 750);
+        Settlement Eilhart = new Settlement(false, "Eilhart", 650, 820);
+        Settlement Ubersreik = new Settlement(false, "Ubersreik", 730, 800);
         ArrayList<Settlement> ReiklandSettlements = new ArrayList<>(Arrays.asList(Altdorf, Grunburg, Eilhart, Ubersreik));
         Province Reikland = new Province(false, "Reikland", 4, ReiklandSettlements);
         //more Settlements here

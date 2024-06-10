@@ -12,8 +12,12 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     private BufferedImage background;
     private Button quit;
     private Button diplomacy;
-    private Button settings;
     private Button nextTurn;
+    private Button technology;
+    private Button objectives;
+    private Button head;
+    private Button electoral1;
+    private Button electoral2;
     private ArrayList<Button> buttons;
     private User user;
     private ArrayList<OtherLord> enemies; //doesn't actually mean enemies, just other lords, probably will change
@@ -25,10 +29,14 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     public GraphicsPanel(String name) {
         try {
             background = ImageIO.read(new File("src/GUI/Background/gameBackground.PNG"));
-            quit = new Button("src/GUI/Buttons/exitButton.png", 2, 1020);
-//            diplomacy = new Button("temp", 5, 100); //need to change
-//            settings = new Button("temp", 5, 100); //need to change
-//            nextTurn = new Button("temp", 5, 100); //need to change
+            quit = new Button("src/GUI/Buttons/leaveButton.png", 19, 4);
+            diplomacy = new Button("src/GUI/Buttons/diplomacyButton.png", 1688, 909);
+            nextTurn = new Button("src/GUI/Buttons/nextTurnButton.png", 1838, 912);
+            technology = new Button("src/GUI/Buttons/technologyButton.png", 1718, 854);
+            objectives = new Button("src/GUI/Buttons/objectivesButton.png", 1695, 974);
+            head = new Button("src/GUI/Buttons/headButton.png", 1765, 914);
+            electoral1 = new Button("src/GUI/Buttons/electoralButton.png", 1843, 855);
+            electoral2 = new Button("src/GUI/Buttons/electoral2Button.png", 1787, 834);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -39,7 +47,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
 
-        buttons = new ArrayList<>(Arrays.asList(quit)); //add diplomacy, settings, nextTurn
+        buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, nextTurn, technology, objectives, head, electoral1, electoral2)); //add diplomacy, settings, nextTurn
         for (Button button : buttons) {
             button.addMouseListener(button);
         }
@@ -80,13 +88,14 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
+            System.out.println(e.getX() + "||" + e.getY());
             //BUTTON CODE:
             for (Button button : buttons) {
                 if (button.buttonRect().contains(mouseClickLocation) && button.isCustomVisible()) {
                     if (button == diplomacy) {
                         DiplomacyFrame f = new DiplomacyFrame(personalDiplomacy);
-                    } else if (button == settings) {
-                        SettingsFrame f = new SettingsFrame();
+//                    } else if (button == settings) {
+//                        SettingsFrame f = new SettingsFrame();
                     } else if (button == nextTurn) {
                         turn++;
                     } else if (button == quit) {
@@ -102,6 +111,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
                         userArmy.setSelected(false);
                         selectedArmy = null;
                         System.out.println("released");
+                        System.out.println(userArmy.getxCoord() + "a" + userArmy.getyCoord());
                     } else {
                         selectedArmy = userArmy;
                         selectedArmy.setSelected(true);
@@ -153,6 +163,14 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e) {
-
+        Point mouseLocation = e.getPoint();
+        for (Button button : buttons) {
+            if (button.buttonRect().contains(mouseLocation)) {
+                button.setCustomVisible(true);
+            } else {
+                button.setCustomVisible(false);
+            }
+        }
+        repaint();
     }
 }
