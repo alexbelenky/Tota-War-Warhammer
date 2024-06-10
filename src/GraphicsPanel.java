@@ -46,6 +46,9 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         user = data.getUser();
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
+        //temp:
+        OtherLord lord = new OtherLord("aaqa", data.getEnemyArmy(), new Province(false, "aaaa", 1, new ArrayList<Settlement>(Arrays.asList(data.getEnemySettlement()))));
+        enemies.add(lord);
 
         buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, nextTurn, technology, objectives, head, electoral1, electoral2)); //add diplomacy, settings, nextTurn
         for (Button button : buttons) {
@@ -144,8 +147,10 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
                 selectedArmy.move(mouseClickLocation);
                 for(OtherLord otherLord : enemies) {
                     for(Army enemyArmy : otherLord.getArmies()) {
-                        if (enemyArmy.armyRect().contains(mouseClickLocation)) {
-                            AttackFrame f = new AttackFrame(selectedArmy, enemyArmy);
+                        for (Army userArmy : user.getArmies()) {
+                            if (enemyArmy.armyRect().intersects(userArmy.armyRect())) {
+                                AttackFrame f = new AttackFrame(selectedArmy, enemyArmy);
+                            }
                         }
                     }
                 }

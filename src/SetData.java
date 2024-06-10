@@ -10,6 +10,8 @@ public class SetData {
     private ArrayList<Province> allProvinces;
     private ArrayList<Province> userProvince;
     private Army userArmy;
+    private Army enemyArmy;
+    private Settlement enemySettlement;
 
     public SetData(String name) {
         this.name = name;
@@ -27,21 +29,25 @@ public class SetData {
         Settlement Ubersreik = new Settlement(false, "Ubersreik", 730, 800);
         ArrayList<Settlement> ReiklandSettlements = new ArrayList<>(Arrays.asList(Altdorf, Grunburg, Eilhart, Ubersreik));
         Province Reikland = new Province(false, "Reikland", 4, ReiklandSettlements);
+        Settlement aka = new Settlement(false, "aaa", 800, 900);
         //more Settlements here
         if (name.equals("Karl Franz")) {
             userProvince.add(Reikland);
         } else {
             //ikit's settlements
         }
+        enemySettlement = aka;
     }
 
     private void SetArmies() {
         if (name.equals("Karl Franz")) {
-            Army army = new Army("Check later", "later", true, 100, 100); //xCord and yCord are temp
-            userArmy = army;
+            Army userArmy = new Army("The March", "Karl Franz", true, 660, 740);
+            this.userArmy = userArmy;
         } else {
             //ikit
         }
+        Army enemyArmy = new Army("Enemy army", "enemy", false, 500, 500);
+        this.enemyArmy = enemyArmy;
     }
 
     public ArrayList<Province> getAllProvinces() {
@@ -50,5 +56,13 @@ public class SetData {
 
     public User getUser() {
         return user;
+    }
+
+    public Army getEnemyArmy() {
+        return enemyArmy;
+    }
+
+    public Settlement getEnemySettlement() {
+        return enemySettlement;
     }
 }
