@@ -42,6 +42,10 @@ public class SetData {
     private void SetArmies() {
         if (name.equals("Karl Franz")) {
             Army userArmy = new Army("The March", "Karl Franz", true, 660, 740);
+            Unit peasent = new Unit("Peasent", false, 1000, 160, 50, 25, 10, 15, 0, 100);
+            for (int i = 0; i < 10; i++) {
+                userArmy.addUnit(peasent);
+            }
             this.userArmy = userArmy;
         } else {
             //ikit
