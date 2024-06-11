@@ -1,15 +1,15 @@
 import javax.swing.*;
 
-public class DiplomacyFrame {
-    private DiplomacyPanel panel;
+public class DiplomacyEnemyFrame {
+    private DiplomacyEnemyPanel panel;
 
-    public DiplomacyFrame(Diplomacy diplomacy) {
-        JFrame frame = new JFrame("Diplomacy");
+    public DiplomacyEnemyFrame(Diplomacy diplomacy) {
+        JFrame frame = new JFrame("DiplomacyEnemy");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
         frame.setLocationRelativeTo(null); // auto-centers frame in screen
         frame.setUndecorated(true);
-        panel = new DiplomacyPanel(frame, diplomacy);
+        panel = new DiplomacyEnemyPanel(frame, diplomacy);
         frame.add(panel);
         frame.setVisible(true);
     }

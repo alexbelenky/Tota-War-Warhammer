@@ -8,19 +8,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DiplomacyPanel extends JPanel implements MouseListener, MouseMotionListener {
+public class DiplomacyEnemyPanel extends JPanel implements MouseListener, MouseMotionListener {
     private BufferedImage background;
     private Button exit;
-    private Button trade;
+    private Button leave;
     private ArrayList<Button> buttons;
     private JFrame enclosingFrame;
     private Diplomacy diplomacy; //will pick otherLord in gui
 
-    public DiplomacyPanel(JFrame frame, Diplomacy diplomacy) {
+    public DiplomacyEnemyPanel(JFrame frame, Diplomacy diplomacy) {
         try {
-            background = ImageIO.read(new File("src/GUI/Background/tradeBackground.png"));
+            background = ImageIO.read(new File("src/GUI/Background/tradePanelBackground.png"));
             exit = new Button("src/GUI/Buttons/leaveButton.png", 19, 4);
-            trade = new Button("src/GUI/Buttons/enemyHoveredOver.png", 445, 816);
+            leave = new Button("src/GUI/Buttons/exitTradeButton.png", 1052, 1012);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -28,7 +28,7 @@ public class DiplomacyPanel extends JPanel implements MouseListener, MouseMotion
         addMouseListener(this);
         addMouseMotionListener(this);
         this.diplomacy = diplomacy;
-        buttons = new ArrayList<>(Arrays.asList(exit, trade));
+        buttons = new ArrayList<>(Arrays.asList(exit, leave));
         for (Button button : buttons) {
             button.addMouseListener(button);
         }
@@ -63,8 +63,8 @@ public class DiplomacyPanel extends JPanel implements MouseListener, MouseMotion
                 if (button.buttonRect().contains(mouseClickLocation) && button.isCustomVisible()) {
                     if (button == exit) {
                         enclosingFrame.setVisible(false);
-                    } else if (button == trade) {
-                        DiplomacyEnemyFrame f = new DiplomacyEnemyFrame(diplomacy);
+                    } else if (button == leave) {
+                        enclosingFrame.setVisible(false);
                     }
                 }
             }

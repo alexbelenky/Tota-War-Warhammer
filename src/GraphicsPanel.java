@@ -48,7 +48,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         enemies = new ArrayList<>(); //set later
         enemies.add(data.getEnemy());
 
-        buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, nextTurn, technology, objectives, head, electoral1, electoral2)); //add diplomacy, settings, nextTurn
+        buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, nextTurn, technology, objectives, head, electoral1, electoral2));
         for (Button button : buttons) {
             button.addMouseListener(button);
         }
