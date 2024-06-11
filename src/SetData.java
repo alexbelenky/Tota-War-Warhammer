@@ -6,37 +6,44 @@ import java.util.Arrays;
 public class SetData {
     //values can all be changed later
     private User user;
+    private OtherLord enemy;
     private String name;
     private ArrayList<Province> allProvinces;
     private ArrayList<Province> userProvince;
+    private ArrayList<Province> enemyProvince;
     private Army userArmy;
     private Army enemyArmy;
-    private Settlement enemySettlement;
-
     public SetData(String name) {
         this.name = name;
         userProvince = new ArrayList<>();
+        enemyProvince = new ArrayList<>();
         SetProvinces();
         SetArmies();
         user = new User(name, userArmy, userProvince);
+        enemy = new OtherLord("Scary aa", enemyArmy, enemyProvince);
     }
 
     private void SetProvinces() {
         System.out.println(name);
-        Settlement Altdorf = new Settlement(true, "Altdorf", 700, 680); //can make it so that the starting faction is already put
-        Settlement Grunburg = new Settlement(false, "Grunburg", 600, 750);
-        Settlement Eilhart = new Settlement(false, "Eilhart", 650, 820);
-        Settlement Ubersreik = new Settlement(false, "Ubersreik", 730, 800);
+        Settlement Altdorf = new Settlement(true, "Altdorf", 700, 680, true);
+        Settlement Grunburg = new Settlement(false, "Grunburg", 600, 750, true);
+        Settlement Eilhart = new Settlement(false, "Eilhart", 650, 820, true);
+        Settlement Ubersreik = new Settlement(false, "Ubersreik", 730, 800, true);
         ArrayList<Settlement> ReiklandSettlements = new ArrayList<>(Arrays.asList(Altdorf, Grunburg, Eilhart, Ubersreik));
         Province Reikland = new Province(false, "Reikland", 4, ReiklandSettlements);
-        Settlement aka = new Settlement(false, "aaa", 800, 900);
-        //more Settlements here
+
+        Settlement Middenheim = new Settlement(true, "Middenheim", 750, 500, false);
+        Settlement Middenstag = new Settlement(false, "Middenstag", 840, 360, false);
+        Settlement Weismund = new Settlement(false, "Weismund", 540, 630, false);
+        Settlement Carroburg = new Settlement(false, "Carroburg", 720, 390, false);
+        ArrayList<Settlement> MiddenlandSettlements = new ArrayList<>(Arrays.asList(Middenheim, Middenstag, Weismund, Carroburg));
+        Province Middenland = new Province(false, "Middenland", 4, MiddenlandSettlements);
         if (name.equals("Karl Franz")) {
             userProvince.add(Reikland);
         } else {
             //ikit's settlements
         }
-        enemySettlement = aka;
+        enemyProvince.add(Middenland);
     }
 
     private void SetArmies() {
@@ -66,7 +73,7 @@ public class SetData {
         return enemyArmy;
     }
 
-    public Settlement getEnemySettlement() {
-        return enemySettlement;
+    public OtherLord getEnemy() {
+        return enemy;
     }
 }

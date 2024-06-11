@@ -13,7 +13,6 @@ public class User {
         treasury = 0; //default
         armies = new ArrayList<>();
         addArmy(army);
-        provinces = new ArrayList<>();
         provinces = province;
     }
 

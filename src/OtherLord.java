@@ -9,13 +9,12 @@ public class OtherLord {
    private int relations; //how much this faction likes the user
 
 
-   public OtherLord(String name, Army army, Province province) {
+   public OtherLord(String name, Army army, ArrayList<Province> province) {
        this.name = name;
        treasury = 0; //default
        armies = new ArrayList<>();
        addArmy(army);
-       provinces = new ArrayList<>();
-       addProvince(province);
+       provinces = province;
        relations = 0; //default
    }
 

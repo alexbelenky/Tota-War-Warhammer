@@ -15,7 +15,7 @@ public class Settlement {
     private double yCoord;
     private boolean isSelected;
 
-    public Settlement(boolean isMajor, String name, double xCoord, double yCoord) {
+    public Settlement(boolean isMajor, String name, double xCoord, double yCoord, boolean isUser) {
         this.isMajor = isMajor;
         this.name = name;
         level = 1;
@@ -23,14 +23,26 @@ public class Settlement {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         isSelected = false;
-        try {
-            if (isMajor) {
-                image = ImageIO.read(new File("src/GUI/Settlements/provinceSettlement.png"));
-            } else {
-                image = ImageIO.read(new File("src/GUI/Settlements/smallSettlementKarl.png"));
+        if (isUser) {
+            try {
+                if (isMajor) {
+                    image = ImageIO.read(new File("src/GUI/Settlements/provinceSettlement.png"));
+                } else {
+                    image = ImageIO.read(new File("src/GUI/Settlements/smallSettlementKarl.png"));
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } else {
+            try {
+                if (isMajor) {
+                    image = ImageIO.read(new File("src/GUI/Settlements/enemyProvinceCapital.png"));
+                } else {
+                    image = ImageIO.read(new File("src/GUI/Settlements/enemySmallSettlement.png"));
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

@@ -42,7 +42,7 @@ public class DiplomacyPanel extends JPanel implements ActionListener {
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
             if (button == trade) {
-                diplomacy.trade(new OtherLord("otherLord", new Army("a", "b", false, 100, 100), new Province(false, "land", 4, new ArrayList<Settlement>()))); //temp
+//                diplomacy.trade(new OtherLord("otherLord", new Army("a", "b", false, 100, 100), new Province(false, "land", 4, new ArrayList<Settlement>()))); //temp
             } else if (button == exit) {
                 enclosingFrame.setVisible(false);
             }

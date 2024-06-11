@@ -46,9 +46,7 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         user = data.getUser();
         personalDiplomacy = new Diplomacy(user);
         enemies = new ArrayList<>(); //set later
-        //temp:
-        OtherLord lord = new OtherLord("aaqa", data.getEnemyArmy(), new Province(false, "aaaa", 1, new ArrayList<Settlement>(Arrays.asList(data.getEnemySettlement()))));
-        enemies.add(lord);
+        enemies.add(data.getEnemy());
 
         buttons = new ArrayList<>(Arrays.asList(quit, diplomacy, nextTurn, technology, objectives, head, electoral1, electoral2)); //add diplomacy, settings, nextTurn
         for (Button button : buttons) {
@@ -79,6 +77,14 @@ public class GraphicsPanel extends JPanel implements MouseListener, MouseMotionL
         for (OtherLord enemy : enemies) {
             for (Army enemyArmy : enemy.getArmies()) {
                 g.drawImage(enemyArmy.getArmyImage(), enemyArmy.getxCoord(), enemyArmy.getyCoord(), null);
+            }
+        }
+
+        for (OtherLord enemy : enemies) {
+            for (Province enemyProvince : enemy.getProvinces()) {
+                for (Settlement settlement : enemyProvince.getSettlements()) {
+                    g.drawImage(settlement.getImage(), settlement.getxCoord(), settlement.getyCoord(), null);
+                }
             }
         }
     }
